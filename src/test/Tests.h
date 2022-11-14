@@ -8,8 +8,17 @@
 #include <gtest/gtest.h>
 #include "../Manager.h"
 
-TEST(TESTING_TESTS, WillFail) {
-    EXPECT_TRUE(false);
+class ManagerTests : public ::testing::Test {
+ public:
+  ClassProject::Manager manager;
+};
+
+TEST_F(ManagerTests, True) {
+    EXPECT_EQ(manager.True(), 1);
+}
+
+TEST_F(ManagerTests, False) {
+    EXPECT_EQ(manager.False(), 0);
 }
 
 #endif
