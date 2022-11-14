@@ -8,4 +8,8 @@
 #include <gtest/gtest.h>
 #include "../Manager.h"
 
+TEST(TESTING_TESTS, WillFail) {
+    EXPECT_TRUE(false);
+}
+
 #endif

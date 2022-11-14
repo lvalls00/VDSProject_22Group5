@@ -7,7 +7,26 @@
 
 #include "ManagerInterface.h"
 
+#include <vector>
+#include <string>
+
 namespace ClassProject {
+
+struct Node {
+    int id;
+    int high_id;
+    int low_id;
+    int top_var_id;
+    std::string label;
+};
+
+class Manager : public ManagerInterface {
+private:
+    std::vector<Node> nodes_;
+};
+
+
+
 
 }
 
