@@ -24,7 +24,8 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 -->
-
+CI Workflow status:
+![example event parameter](https://github.com/lvalls00/VDSProject_22Group5/actions/workflows/cmake_ci.yml/badge.svg?event=push)
 
 <!-- PROJECT LOGO -->
 <br />
@@ -35,7 +36,7 @@
   <h3 align="center">
   VDS Class Project
   <br />
-  Group #X
+  Group #5
   <br />
   Winter Semester 2022/2023
   </h3>
@@ -43,8 +44,12 @@
   <p align="center">
     GitHub repository for Verification of Digital Systems Class Project
     <br />
+    Group:
     <br />
-    <a href="https://github.com/TUK-EIS/VDSProject/issues">Report Bug</a>
+    Alex Amadeu Cani
+    <br />
+    Luis Valls Sansaloni
+    <br />
   </p>
 </div>
 
@@ -204,18 +209,18 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- ROADMAP -->
 ## Roadmap
 #### Part-1
-- [ ] TODO
-- [X] DONE
+- [X] TODO
+- [ ] DONE
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 #### Part-2
-- [ ] TODO
-- [X] DONE
+- [X] TODO
+- [ ] DONE
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 #### Part-3
-- [ ] TODO
-- [X] DONE
+- [X] TODO
+- [ ] DONE
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTACT -->
