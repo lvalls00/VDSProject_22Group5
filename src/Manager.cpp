@@ -43,7 +43,22 @@ BDD_ID Manager::topVar(BDD_ID f) {
 }
 
 BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
-    return 0;
+    // Terminal cases
+    if (i == True()) {  // ite(1, f, g)
+        return t;
+    } else if (i == False()) {  // ite(0, g, f)
+        return e;
+    } else if (t == True() && e == False()) {  // ite(f, 1, 0)
+        return i;
+    } else if (t == e) {  // ite(g, f, f)
+        return t;
+    } else if (t == False() && e == True()) {  // ite(f, 0, 1)
+        return neg(i);
+    }
+
+    // TODO(Implement the rest)
+
+    return kFalseId;
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x) {
