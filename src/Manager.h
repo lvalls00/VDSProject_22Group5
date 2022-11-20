@@ -52,6 +52,20 @@ class Manager : public ManagerInterface {
   static const BDD_ID kTrueId;
   static const BDD_ID kFalseId;
 
+  /**
+   * @brief Searched the unique table for a node that has the same hash, i.e.
+   * the same high, low and top variable nodes
+   *
+   * @param high The id of the high node
+   * @param low The id of the low now
+   * @param top_var The id of the top variable
+   * @param result Where to store the id of the matching node, if found
+   *
+   * @return true if a matching node was found
+   * @return false otherwise
+   */
+  bool FindMatchingNode(BDD_ID high, BDD_ID low, BDD_ID top_var, BDD_ID *result);
+
   std::vector<Node> nodes_;
 };
 

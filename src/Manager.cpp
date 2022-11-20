@@ -63,7 +63,29 @@ BDD_ID Manager::coFactorFalse(BDD_ID f) {
 }
 
 BDD_ID Manager::neg(BDD_ID a) {
-    return 0;
+    // Special cases for true and false
+    // Because keeping the top_var_id would not work
+    if (a == kTrueId) return kFalseId;
+    if (a == kFalseId) return kTrueId;
+
+    const Node &node = nodes_[a];
+
+    Node new_node;
+    new_node.high_id = node.low_id;
+    new_node.low_id = node.high_id;
+    new_node.top_var_id = node.top_var_id;
+
+    if (FindMatchingNode(new_node.high_id, new_node.low_id, new_node.top_var_id,
+                         &new_node.id)) {
+      return new_node.id;  // return the already existing id
+    }
+
+    // Otherwise create a new one
+    new_node.id = nodes_.size();
+    new_node.label = "not " + node.label;
+    nodes_.push_back(new_node);
+
+    return new_node.id;
 }
 
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b) {
@@ -100,6 +122,17 @@ void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) {}
 
 size_t Manager::uniqueTableSize() {
     return nodes_.size();
+}
+
+bool Manager::FindMatchingNode(BDD_ID high, BDD_ID low, BDD_ID top_var, BDD_ID *result) {
+    for (const Node &node : nodes_) {
+        if (node.high_id == high && node.low_id == low && node.top_var_id == top_var) {
+            *result = node.id;
+            return true;
+        }
+    }
+
+    return false;
 }
 
 }  // namespace ClassProject
