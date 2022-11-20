@@ -27,11 +27,15 @@ const BDD_ID &Manager::False() {
 }
 
 bool Manager::isConstant(BDD_ID f) {
-    return false;
+    return f == kTrueId || f == kFalseId;
 }
 
 bool Manager::isVariable(BDD_ID x) {
-    return false;
+    Node &node = nodes_[x];
+    return node.id == x &&
+           node.high_id == kTrueId &&
+           node.low_id == kFalseId &&
+           node.top_var_id == x;
 }
 
 BDD_ID Manager::topVar(BDD_ID f) {
