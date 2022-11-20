@@ -2,8 +2,8 @@
 // Created by tobias on 21.11.16.
 //
 
-#ifndef VDSPROJECT_TESTS_H
-#define VDSPROJECT_TESTS_H
+#ifndef SRC_TEST_TESTS_H_
+#define SRC_TEST_TESTS_H_
 
 #include <gtest/gtest.h>
 #include "../Manager.h"
@@ -39,4 +39,20 @@ TEST_F(ManagerTests, CreateVar) {
     EXPECT_EQ(id_c, 4);
 }
 
-#endif
+TEST_F(ManagerTests, IsConstant_and_IsVariable) {
+    // True and false nodes are constants
+    EXPECT_TRUE(manager.isConstant(manager.True()));
+    EXPECT_TRUE(manager.isConstant(manager.False()));
+    EXPECT_FALSE(manager.isVariable(manager.True()));
+    EXPECT_FALSE(manager.isVariable(manager.False()));
+
+    BDD_ID id_a = manager.createVar("a");
+    BDD_ID id_b = manager.createVar("b");
+
+    EXPECT_TRUE(manager.isVariable(id_a));
+    EXPECT_TRUE(manager.isVariable(id_b));
+    EXPECT_FALSE(manager.isConstant(id_a));
+    EXPECT_FALSE(manager.isConstant(id_b));
+}
+
+#endif  // SRC_TEST_TESTS_H_
