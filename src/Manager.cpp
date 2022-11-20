@@ -62,11 +62,35 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x) {
-    return 0;
+    // f is constant
+    // x is constant
+    // f.top > x
+    if (isConstant(f) || isConstant(x) || nodes_[f].top_var_id > x) {
+        return f;
+    } else if (nodes_[f].top_var_id == x) {
+        // f.top == x
+        return nodes_[f].high_id;
+    }
+
+    BDD_ID T = coFactorTrue(nodes_[f].high_id, x);
+    BDD_ID F = coFactorTrue(nodes_[f].low_id, x);
+    return ite(nodes_[f].top_var_id, T, F);
 }
 
 BDD_ID Manager::coFactorFalse(BDD_ID f, BDD_ID x) {
-    return 0;
+    // f is constant
+    // x is constant
+    // f.top > x
+    if (isConstant(f) || isConstant(x) || nodes_[f].top_var_id > x) {
+        return f;
+    } else if (nodes_[f].top_var_id == x) {
+        // f.top == x
+        return nodes_[f].low_id;
+    }
+
+    BDD_ID T = coFactorFalse(nodes_[f].high_id, x);
+    BDD_ID F = coFactorFalse(nodes_[f].low_id, x);
+    return ite(nodes_[f].top_var_id, T, F);
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID f) {
