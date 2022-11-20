@@ -27,6 +27,13 @@ TEST_F(ManagerTests, InitialTableSize) {
     EXPECT_EQ(manager.uniqueTableSize(), 2);  // only has true and false at the beggining
 }
 
+TEST_F(ManagerTests, TableSizeGrowsWithVariables) {
+    manager.createVar("a");
+    manager.createVar("b");
+    manager.createVar("c");
+    EXPECT_EQ(manager.uniqueTableSize(), 5);
+}
+
 TEST_F(ManagerTests, CreateVar) {
     // Since first 2 IDs are always true and false
     // the first variable will start from id = 2
