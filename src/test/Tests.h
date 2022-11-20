@@ -84,4 +84,20 @@ TEST_F(ManagerTests, ite_TerminalCases) {
     EXPECT_EQ(manager.neg(f), manager.ite(f, manager.False(), manager.True()));
 }
 
+TEST_F(ManagerTests, Neg) {
+    EXPECT_EQ(manager.neg(manager.True()), manager.False());
+    EXPECT_EQ(manager.neg(manager.False()), manager.True());
+
+    BDD_ID f = manager.createVar("f");
+    BDD_ID nf = manager.neg(f);
+
+    // We have no getter methods for the low and high nodes
+    // so we negate nf and check if it goes back to f
+    EXPECT_EQ(f, manager.neg(nf));
+
+    // TODO(Try to improve this)
+    // EXPECT_EQ(manager.coFactorFalse(nf), manager.True());
+    // EXPECT_EQ(manager.coFactorTrue(nf), manager.False());
+}
+
 #endif  // SRC_TEST_TESTS_H_
