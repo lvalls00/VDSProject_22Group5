@@ -73,4 +73,15 @@ TEST_F(ManagerTests, TopVar) {
     // TODO(Write test for more complex cases)
 }
 
+TEST_F(ManagerTests, ite_TerminalCases) {
+    BDD_ID g = manager.createVar("g");
+    BDD_ID f = manager.createVar("f");
+
+    EXPECT_EQ(f, manager.ite(manager.True(), f, g));
+    EXPECT_EQ(f, manager.ite(manager.False(), g, f));
+    EXPECT_EQ(f, manager.ite(f, manager.True(), manager.False()));
+    EXPECT_EQ(f, manager.ite(g, f, f));
+    EXPECT_EQ(manager.neg(f), manager.ite(f, manager.False(), manager.True()));
+}
+
 #endif  // SRC_TEST_TESTS_H_
