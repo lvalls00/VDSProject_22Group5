@@ -70,11 +70,11 @@ BDD_ID Manager::coFactorFalse(BDD_ID f, BDD_ID x) {
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID f) {
-    return 0;
+    return coFactorTrue(f, nodes_[f].top_var_id);
 }
 
 BDD_ID Manager::coFactorFalse(BDD_ID f) {
-    return 0;
+    return coFactorFalse(f, nodes_[f].top_var_id);
 }
 
 BDD_ID Manager::neg(BDD_ID a) {
