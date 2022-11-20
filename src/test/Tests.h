@@ -100,4 +100,38 @@ TEST_F(ManagerTests, Neg) {
     // EXPECT_EQ(manager.coFactorTrue(nf), manager.False());
 }
 
+TEST_F(ManagerTests, Cofactor_TerminalCases) {
+    // f is constant = True and False
+    EXPECT_EQ(manager.coFactorFalse(manager.True()), manager.True());
+    EXPECT_EQ(manager.coFactorFalse(manager.False()), manager.False());
+    EXPECT_EQ(manager.coFactorTrue(manager.True()), manager.True());
+    EXPECT_EQ(manager.coFactorTrue(manager.False()), manager.False());
+
+    // f constant, x not constant
+    BDD_ID g = manager.createVar("g");
+    EXPECT_EQ(manager.coFactorFalse(manager.True(), g), manager.True());
+    EXPECT_EQ(manager.coFactorFalse(manager.False(), g), manager.False());
+    EXPECT_EQ(manager.coFactorTrue(manager.True(), g), manager.True());
+    EXPECT_EQ(manager.coFactorTrue(manager.False(), g), manager.False());
+
+    // x is constant
+    EXPECT_EQ(manager.coFactorTrue(g, manager.True()), g);
+    EXPECT_EQ(manager.coFactorTrue(g, manager.False()), g);
+    EXPECT_EQ(manager.coFactorFalse(g, manager.True()), g);
+    EXPECT_EQ(manager.coFactorFalse(g, manager.False()), g);
+
+    // f.top > x
+    BDD_ID h = manager.createVar("h");
+    EXPECT_EQ(manager.coFactorTrue(h, g), h);
+    EXPECT_EQ(manager.coFactorFalse(h, g), h);
+
+    // f.top == x
+    EXPECT_EQ(manager.coFactorTrue(g), manager.True());
+    EXPECT_EQ(manager.coFactorTrue(g, g), manager.True());
+    EXPECT_EQ(manager.coFactorFalse(g), manager.False());
+    EXPECT_EQ(manager.coFactorFalse(g, g), manager.False());
+
+    // TODO(Improve with more complex cases)
+}
+
 #endif  // SRC_TEST_TESTS_H_
