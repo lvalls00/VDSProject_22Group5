@@ -53,6 +53,17 @@ TEST_F(ManagerTests, IsConstant_and_IsVariable) {
     EXPECT_TRUE(manager.isVariable(id_b));
     EXPECT_FALSE(manager.isConstant(id_a));
     EXPECT_FALSE(manager.isConstant(id_b));
+
+    // TODO(Write test for more complex functions such as f = a*b | c)
+}
+
+TEST_F(ManagerTests, TopVar) {
+    BDD_ID id_a = manager.createVar("a");
+    BDD_ID id_b = manager.createVar("b");
+    EXPECT_EQ(id_a, manager.topVar(id_a));
+    EXPECT_EQ(id_b, manager.topVar(id_b));
+
+    // TODO(Write test for more complex cases)
 }
 
 #endif  // SRC_TEST_TESTS_H_
