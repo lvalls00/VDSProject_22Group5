@@ -13,7 +13,9 @@ Manager::Manager() {
 Manager::~Manager() {}
 
 BDD_ID Manager::createVar(const std::string &label) {
-    return 0;
+    BDD_ID id = nodes_.size();
+    nodes_.push_back({id, True(), False(), id, label});
+    return id;
 }
 
 const BDD_ID &Manager::True() {
