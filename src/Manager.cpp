@@ -39,7 +39,7 @@ bool Manager::isVariable(BDD_ID x) {
 }
 
 BDD_ID Manager::topVar(BDD_ID f) {
-    return 0;
+    return nodes_[f].top_var_id;
 }
 
 BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
