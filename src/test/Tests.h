@@ -160,4 +160,35 @@ TEST_F(ManagerTests, TopVariableName) {
     // TODO(Improve with more complex cases)
 }
 
+TEST_F(ManagerTests, LogicalOperations) {
+    BDD_ID f = manager.createVar("f");
+    BDD_ID g = manager.createVar("g");
+
+    BDD_ID and2 = manager.and2(f, g);
+    EXPECT_EQ(manager.low(and2), manager.False());
+    EXPECT_EQ(manager.high(and2), g);
+
+    BDD_ID or2 = manager.or2(f, g);
+    EXPECT_EQ(manager.low(or2), g);
+    EXPECT_EQ(manager.high(or2), manager.True());
+
+    BDD_ID xor2 = manager.xor2(f, g);
+    EXPECT_EQ(manager.low(xor2), g);
+    EXPECT_EQ(manager.high(xor2), manager.neg(g));
+
+    BDD_ID nand2 = manager.nand2(f, g);
+    EXPECT_EQ(manager.low(nand2), manager.True());
+    EXPECT_EQ(manager.high(nand2), manager.neg(g));
+
+    BDD_ID nor2 = manager.nor2(f, g);
+    EXPECT_EQ(manager.low(nor2), manager.neg(g));
+    EXPECT_EQ(manager.high(nor2), manager.False());
+
+    BDD_ID xnor2 = manager.xnor2(f, g);
+    EXPECT_EQ(manager.low(xnor2), manager.neg(g));
+    EXPECT_EQ(manager.high(xnor2), g);
+
+    // TODO(Improve with more complex cases)
+}
+
 #endif  // SRC_TEST_TESTS_H_
