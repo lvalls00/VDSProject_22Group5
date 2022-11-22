@@ -141,6 +141,8 @@ BDD_ID Manager::coFactorFalse(BDD_ID f) {
 }
 
 BDD_ID Manager::neg(BDD_ID a) {
+    // ASK
+
     // Special cases for true and false
     // Because keeping the top_var_id would not work
     if (a == kTrueId) return kFalseId;
@@ -167,27 +169,27 @@ BDD_ID Manager::neg(BDD_ID a) {
 }
 
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b) {
-    return 0;
+    return ite(a, b, False());
 }
 
 BDD_ID Manager::or2(BDD_ID a, BDD_ID b) {
-    return 0;
+    return ite(a, True(), b);
 }
 
 BDD_ID Manager::xor2(BDD_ID a, BDD_ID b) {
-    return 0;
+    return ite(a, neg(b), b);
 }
 
 BDD_ID Manager::nand2(BDD_ID a, BDD_ID b) {
-    return 0;
+    return or2(neg(a), neg(b));
 }
 
 BDD_ID Manager::nor2(BDD_ID a, BDD_ID b) {
-    return 0;
+    return and2(neg(a), neg(b));
 }
 
 BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b) {
-    return 0;
+    return neg(xor2(a, b));
 }
 
 std::string Manager::getTopVarName(const BDD_ID &root) {
