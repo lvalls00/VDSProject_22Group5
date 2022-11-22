@@ -204,4 +204,17 @@ TEST_F(ManagerTests, FindNodes) {
     EXPECT_EQ(actual_set, expected_set);
 }
 
+TEST_F(ManagerTests, FindVars) {
+    BDD_ID f = manager.createVar("f");
+    BDD_ID g = manager.createVar("g");
+    manager.createVar("z");  // this will be in the unique table but not in the set
+
+    BDD_ID and2 = manager.and2(f, g);
+
+    std::set<BDD_ID> expected_set{f, g};
+    std::set<BDD_ID> actual_set;
+    manager.findVars(and2, actual_set);
+    EXPECT_EQ(actual_set, expected_set);
+}
+
 #endif  // SRC_TEST_TESTS_H_
