@@ -48,6 +48,9 @@ class Manager : public ManagerInterface {
   void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) override;
   size_t uniqueTableSize() override;
 
+  BDD_ID high(BDD_ID x);
+  BDD_ID low(BDD_ID x);
+
  private:
   static const BDD_ID kTrueId;
   static const BDD_ID kFalseId;

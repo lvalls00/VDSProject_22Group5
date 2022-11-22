@@ -174,4 +174,12 @@ bool Manager::FindMatchingNode(BDD_ID high, BDD_ID low, BDD_ID top_var, BDD_ID *
     return false;
 }
 
+BDD_ID Manager::high(BDD_ID x) {
+    return nodes_[x].high_id;
+}
+
+BDD_ID Manager::low(BDD_ID x) {
+    return nodes_[x].low_id;
+}
+
 }  // namespace ClassProject
