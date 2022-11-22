@@ -8,6 +8,7 @@
 #include "ManagerInterface.h"
 
 #include <vector>
+#include <set>
 #include <string>
 
 namespace ClassProject {

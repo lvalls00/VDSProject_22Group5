@@ -198,7 +198,7 @@ TEST_F(ManagerTests, FindNodes) {
 
     BDD_ID and2 = manager.and2(f, g);
 
-    std::set<BDD_ID> expected_set{f, g, and2, manager.True(), manager.False()};
+    std::set<BDD_ID> expected_set{g, and2, manager.True(), manager.False()};
     std::set<BDD_ID> actual_set;
     manager.findNodes(and2, actual_set);
     EXPECT_EQ(actual_set, expected_set);

@@ -1,7 +1,6 @@
 #include "Manager.h"
 
 #include <algorithm>
-#include <set>
 
 namespace ClassProject {
 
@@ -196,7 +195,16 @@ std::string Manager::getTopVarName(const BDD_ID &root) {
     return nodes_[topVar(root)].label;
 }
 
-void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) {}
+void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) {
+    nodes_of_root.insert(root);
+
+    if (isConstant(root)) {
+        return;
+    } else {
+        findNodes(nodes_[root].low_id, nodes_of_root);
+        findNodes(nodes_[root].high_id, nodes_of_root);
+    }
+}
 
 void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) {}
 
