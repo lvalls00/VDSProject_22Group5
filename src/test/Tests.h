@@ -191,4 +191,17 @@ TEST_F(ManagerTests, LogicalOperations) {
     // TODO(Improve with more complex cases)
 }
 
+TEST_F(ManagerTests, FindNodes) {
+    BDD_ID f = manager.createVar("f");
+    BDD_ID g = manager.createVar("g");
+    manager.createVar("z");  // this will be in the unique table but not in the set
+
+    BDD_ID and2 = manager.and2(f, g);
+
+    std::set<BDD_ID> expected_set{f, g, and2, manager.True(), manager.False()};
+    std::set<BDD_ID> actual_set;
+    manager.findNodes(and2, actual_set);
+    EXPECT_EQ(actual_set, expected_set);
+}
+
 #endif  // SRC_TEST_TESTS_H_
