@@ -134,4 +134,14 @@ TEST_F(ManagerTests, Cofactor_TerminalCases) {
     // TODO(Improve with more complex cases)
 }
 
+TEST_F(ManagerTests, TopVariableName) {
+    BDD_ID f = manager.createVar("f");
+    BDD_ID g = manager.createVar("g");
+
+    EXPECT_EQ(manager.getTopVarName(f), "f");
+    EXPECT_EQ(manager.getTopVarName(g), "g");
+
+    // TODO(Improve with more complex cases)
+}
+
 #endif  // SRC_TEST_TESTS_H_
