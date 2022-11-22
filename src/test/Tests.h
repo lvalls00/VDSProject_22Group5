@@ -84,6 +84,22 @@ TEST_F(ManagerTests, ite_TerminalCases) {
     EXPECT_EQ(manager.neg(f), manager.ite(f, manager.False(), manager.True()));
 }
 
+TEST_F(ManagerTests, ite) {
+    BDD_ID f = manager.createVar("f");
+    BDD_ID g = manager.createVar("g");
+
+    BDD_ID f_and_g = manager.ite(f, g, manager.False());
+
+    // Top variable is f
+    EXPECT_EQ(manager.topVar(f_and_g), f);
+
+    // Low node is 0
+    EXPECT_EQ(manager.low(f_and_g), manager.False());
+
+    // High node is g
+    EXPECT_EQ(manager.high(f_and_g), g);
+}
+
 TEST_F(ManagerTests, Neg) {
     EXPECT_EQ(manager.neg(manager.True()), manager.False());
     EXPECT_EQ(manager.neg(manager.False()), manager.True());
