@@ -152,7 +152,7 @@ BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b) {
 }
 
 std::string Manager::getTopVarName(const BDD_ID &root) {
-    return "";
+    return nodes_[topVar(root)].label;
 }
 
 void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) {}
