@@ -1,5 +1,8 @@
 #include "Manager.h"
 
+#include <algorithm>
+#include <set>
+
 namespace ClassProject {
 
 const BDD_ID Manager::kTrueId = 1;
@@ -56,9 +59,45 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
         return neg(i);
     }
 
-    // TODO(Implement the rest)
+    BDD_ID topvar_i = topVar(i);
+    BDD_ID topvar_t = topVar(t);
+    BDD_ID topvar_e = topVar(e);
 
-    return kFalseId;
+    // The smallest index larger than kTrueId is the top variable
+    BDD_ID topvar = GetMinimumTopVariable(topvar_i, topvar_t, topvar_e);
+
+    BDD_ID cofactor_true_i = coFactorTrue(i, topvar);
+    BDD_ID cofactor_true_t = coFactorTrue(t, topvar);
+    BDD_ID cofactor_true_e = coFactorTrue(e, topvar);
+
+    BDD_ID cofactor_false_i = coFactorFalse(i, topvar);
+    BDD_ID cofactor_false_t = coFactorFalse(t, topvar);
+    BDD_ID cofactor_false_e = coFactorFalse(e, topvar);
+
+    BDD_ID result_high = ite(cofactor_true_i, cofactor_true_t, cofactor_true_e);
+    BDD_ID result_low = ite(cofactor_false_i, cofactor_false_t, cofactor_false_e);
+
+    if (result_high == result_low) {
+        return result_high;
+    }
+
+    BDD_ID existing_node_id = kFalseId;
+    bool existing_node = FindMatchingNode(result_high, result_low, topvar, &existing_node_id);
+    if (existing_node) {
+        return existing_node_id;
+    }
+
+    Node new_node;
+    new_node.high_id = result_high;
+    new_node.low_id = result_low;
+    new_node.id = nodes_.size();
+    new_node.top_var_id = topvar;
+    new_node.label = ":p";
+    nodes_.push_back(new_node);
+
+    // TODO(Implement computed table and labels)
+
+    return new_node.id;
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x) {
@@ -180,6 +219,15 @@ BDD_ID Manager::high(BDD_ID x) {
 
 BDD_ID Manager::low(BDD_ID x) {
     return nodes_[x].low_id;
+}
+
+BDD_ID Manager::GetMinimumTopVariable(BDD_ID x, BDD_ID y, BDD_ID z) {
+    std::set<BDD_ID> ordered_set{x, y, z};
+    for (const BDD_ID id : ordered_set) {
+        if (id > kTrueId) return id;
+    }
+
+    return kFalseId;
 }
 
 }  // namespace ClassProject

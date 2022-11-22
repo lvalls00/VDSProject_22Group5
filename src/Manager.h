@@ -69,6 +69,8 @@ class Manager : public ManagerInterface {
    */
   bool FindMatchingNode(BDD_ID high, BDD_ID low, BDD_ID top_var, BDD_ID *result);
 
+  BDD_ID GetMinimumTopVariable(BDD_ID x, BDD_ID y, BDD_ID z);
+
   std::vector<Node> nodes_;
 };
 
