@@ -54,6 +54,7 @@ class Manager : public ManagerInterface {
 
   BDD_ID high(BDD_ID x);
   BDD_ID low(BDD_ID x);
+  std::string GetLabel(BDD_ID x);
 
  private:
   static const BDD_ID kTrueId;
@@ -74,6 +75,7 @@ class Manager : public ManagerInterface {
   bool FindMatchingNode(BDD_ID high, BDD_ID low, BDD_ID top_var, BDD_ID *result);
 
   BDD_ID GetMinimumTopVariable(BDD_ID x, BDD_ID y, BDD_ID z);
+  void UpdateLabel(BDD_ID node, const std::string &prefix, BDD_ID a, BDD_ID b);
 
   std::vector<Node> nodes_;
   std::unordered_map<std::tuple<BDD_ID, BDD_ID, BDD_ID>, BDD_ID> computed_table_;

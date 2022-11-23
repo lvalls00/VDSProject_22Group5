@@ -217,4 +217,22 @@ TEST_F(ManagerTests, FindVars) {
     EXPECT_EQ(actual_set, expected_set);
 }
 
+TEST_F(ManagerTests, FullExample_Part1) {
+    BDD_ID a = manager.createVar("a");
+    BDD_ID b = manager.createVar("b");
+    BDD_ID c = manager.createVar("c");
+    BDD_ID d = manager.createVar("d");
+
+    BDD_ID a_or_b = manager.or2(a, b);
+    BDD_ID c_and_d = manager.and2(c, d);
+    BDD_ID result = manager.and2(a_or_b, c_and_d);
+
+    EXPECT_EQ(result, 9);
+    EXPECT_EQ(manager.high(result), 7);
+    EXPECT_EQ(manager.low(result), 8);
+    EXPECT_EQ(manager.topVar(result), 2);
+
+    std::cout << manager.GetLabel(result) << std::endl;
+}
+
 #endif  // SRC_TEST_TESTS_H_

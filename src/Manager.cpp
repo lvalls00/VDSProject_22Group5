@@ -177,28 +177,44 @@ BDD_ID Manager::neg(BDD_ID a) {
     return new_node.id;
 }
 
+void Manager::UpdateLabel(BDD_ID node, const std::string &prefix, BDD_ID a, BDD_ID b) {
+    nodes_[node].label = prefix + "(" + nodes_[a].label + ", " + nodes_[b].label + ")";
+}
+
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b) {
-    return ite(a, b, False());
+    BDD_ID result = ite(a, b, False());
+    UpdateLabel(result, "and2", a, b);
+    return result;
 }
 
 BDD_ID Manager::or2(BDD_ID a, BDD_ID b) {
-    return ite(a, True(), b);
+    BDD_ID result = ite(a, True(), b);
+    UpdateLabel(result, "or2", a, b);
+    return result;
 }
 
 BDD_ID Manager::xor2(BDD_ID a, BDD_ID b) {
-    return ite(a, neg(b), b);
+    BDD_ID result = ite(a, neg(b), b);
+    UpdateLabel(result, "xor2", a, b);
+    return result;
 }
 
 BDD_ID Manager::nand2(BDD_ID a, BDD_ID b) {
-    return or2(neg(a), neg(b));
+    BDD_ID result = or2(neg(a), neg(b));
+    UpdateLabel(result, "nand2", a, b);
+    return result;
 }
 
 BDD_ID Manager::nor2(BDD_ID a, BDD_ID b) {
-    return and2(neg(a), neg(b));
+    BDD_ID result = and2(neg(a), neg(b));
+    UpdateLabel(result, "nor2", a, b);
+    return result;
 }
 
 BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b) {
-    return neg(xor2(a, b));
+    BDD_ID result = neg(xor2(a, b));
+    UpdateLabel(result, "xnor2", a, b);
+    return result;
 }
 
 std::string Manager::getTopVarName(const BDD_ID &root) {
@@ -247,6 +263,10 @@ BDD_ID Manager::high(BDD_ID x) {
 
 BDD_ID Manager::low(BDD_ID x) {
     return nodes_[x].low_id;
+}
+
+std::string Manager::GetLabel(BDD_ID x) {
+    return nodes_[x].label;
 }
 
 BDD_ID Manager::GetMinimumTopVariable(BDD_ID x, BDD_ID y, BDD_ID z) {
