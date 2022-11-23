@@ -5,11 +5,14 @@
 #ifndef SRC_MANAGER_H_
 #define SRC_MANAGER_H_
 
-#include "ManagerInterface.h"
-
-#include <vector>
 #include <set>
 #include <string>
+#include <tuple>
+#include <unordered_map>
+#include <vector>
+
+#include "ManagerInterface.h"
+#include "TupleHasher.h"
 
 namespace ClassProject {
 
@@ -73,6 +76,7 @@ class Manager : public ManagerInterface {
   BDD_ID GetMinimumTopVariable(BDD_ID x, BDD_ID y, BDD_ID z);
 
   std::vector<Node> nodes_;
+  std::unordered_map<std::tuple<BDD_ID, BDD_ID, BDD_ID>, BDD_ID> computed_table_;
 };
 
 }  // namespace ClassProject

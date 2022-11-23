@@ -1,6 +1,7 @@
 #include "Manager.h"
 
 #include <algorithm>
+#include <utility>
 
 namespace ClassProject {
 
@@ -58,6 +59,13 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
         return neg(i);
     }
 
+    // Check the computed table
+    IntTriplet node_hash{i, t, e};
+    auto result = computed_table_.find(node_hash);
+    if (result != computed_table_.end()) {  // it already exists
+        return (*result).second;
+    }
+
     BDD_ID topvar_i = topVar(i);
     BDD_ID topvar_t = topVar(t);
     BDD_ID topvar_e = topVar(e);
@@ -77,12 +85,14 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
     BDD_ID result_low = ite(cofactor_false_i, cofactor_false_t, cofactor_false_e);
 
     if (result_high == result_low) {
+        computed_table_[node_hash] = result_high;
         return result_high;
     }
 
     BDD_ID existing_node_id = kFalseId;
     bool existing_node = FindMatchingNode(result_high, result_low, topvar, &existing_node_id);
     if (existing_node) {
+        computed_table_[node_hash] = existing_node;
         return existing_node_id;
     }
 
@@ -94,7 +104,7 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
     new_node.label = ":p";
     nodes_.push_back(new_node);
 
-    // TODO(Implement computed table and labels)
+    computed_table_[node_hash] = new_node.id;
 
     return new_node.id;
 }
