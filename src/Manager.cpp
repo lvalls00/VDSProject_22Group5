@@ -150,8 +150,6 @@ BDD_ID Manager::coFactorFalse(BDD_ID f) {
 }
 
 BDD_ID Manager::neg(BDD_ID a) {
-    // ASK
-
     // Special cases for true and false
     // Because keeping the top_var_id would not work
     if (a == kTrueId) return kFalseId;

@@ -61,7 +61,9 @@ TEST_F(ManagerTests, IsConstant_and_IsVariable) {
     EXPECT_FALSE(manager.isConstant(id_a));
     EXPECT_FALSE(manager.isConstant(id_b));
 
-    // TODO(Write test for more complex functions such as f = a*b | c)
+    BDD_ID a_and_b = manager.and2(id_a, id_b);
+    EXPECT_FALSE(manager.isConstant(a_and_b));
+    EXPECT_FALSE(manager.isVariable(a_and_b));
 }
 
 TEST_F(ManagerTests, TopVar) {
@@ -69,8 +71,6 @@ TEST_F(ManagerTests, TopVar) {
     BDD_ID id_b = manager.createVar("b");
     EXPECT_EQ(id_a, manager.topVar(id_a));
     EXPECT_EQ(id_b, manager.topVar(id_b));
-
-    // TODO(Write test for more complex cases)
 }
 
 TEST_F(ManagerTests, ite_TerminalCases) {
@@ -107,13 +107,12 @@ TEST_F(ManagerTests, Neg) {
     BDD_ID f = manager.createVar("f");
     BDD_ID nf = manager.neg(f);
 
-    // We have no getter methods for the low and high nodes
-    // so we negate nf and check if it goes back to f
-    EXPECT_EQ(f, manager.neg(nf));
+    // Check high and low
+    EXPECT_EQ(manager.high(nf), manager.False());
+    EXPECT_EQ(manager.low(nf), manager.True());
 
-    // TODO(Try to improve this)
-    // EXPECT_EQ(manager.coFactorFalse(nf), manager.True());
-    // EXPECT_EQ(manager.coFactorTrue(nf), manager.False());
+    // Also check if we negate the negation it reverts to the original ID
+    EXPECT_EQ(f, manager.neg(nf));
 }
 
 TEST_F(ManagerTests, Cofactor_TerminalCases) {
@@ -146,8 +145,6 @@ TEST_F(ManagerTests, Cofactor_TerminalCases) {
     EXPECT_EQ(manager.coFactorTrue(g, g), manager.True());
     EXPECT_EQ(manager.coFactorFalse(g), manager.False());
     EXPECT_EQ(manager.coFactorFalse(g, g), manager.False());
-
-    // TODO(Improve with more complex cases)
 }
 
 TEST_F(ManagerTests, TopVariableName) {
@@ -157,7 +154,8 @@ TEST_F(ManagerTests, TopVariableName) {
     EXPECT_EQ(manager.getTopVarName(f), "f");
     EXPECT_EQ(manager.getTopVarName(g), "g");
 
-    // TODO(Improve with more complex cases)
+    BDD_ID f_and_g = manager.and2(f, g);
+    EXPECT_EQ(manager.getTopVarName(f_and_g), "f");
 }
 
 TEST_F(ManagerTests, LogicalOperations) {
@@ -187,8 +185,6 @@ TEST_F(ManagerTests, LogicalOperations) {
     BDD_ID xnor2 = manager.xnor2(f, g);
     EXPECT_EQ(manager.low(xnor2), manager.neg(g));
     EXPECT_EQ(manager.high(xnor2), g);
-
-    // TODO(Improve with more complex cases)
 }
 
 TEST_F(ManagerTests, FindNodes) {
