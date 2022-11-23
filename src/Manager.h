@@ -54,7 +54,7 @@ class Manager : public ManagerInterface {
 
   BDD_ID high(BDD_ID x);
   BDD_ID low(BDD_ID x);
-  std::string GetLabel(BDD_ID x);
+  std::string getLabel(BDD_ID x);
 
  private:
   static const BDD_ID kTrueId;

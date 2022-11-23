@@ -228,7 +228,7 @@ TEST_F(ManagerTests, FullExample_Part1) {
     EXPECT_EQ(manager.low(result), 8);
     EXPECT_EQ(manager.topVar(result), 2);
 
-    std::cout << manager.GetLabel(result) << std::endl;
+    std::cout << manager.getLabel(result) << std::endl;
 }
 
 #endif  // SRC_TEST_TESTS_H_

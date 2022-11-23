@@ -263,7 +263,7 @@ BDD_ID Manager::low(BDD_ID x) {
     return nodes_[x].low_id;
 }
 
-std::string Manager::GetLabel(BDD_ID x) {
+std::string Manager::getLabel(BDD_ID x) {
     return nodes_[x].label;
 }
 
