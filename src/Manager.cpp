@@ -55,8 +55,6 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
         return i;
     } else if (t == e) {  // ite(g, f, f)
         return t;
-    } else if (t == False() && e == True()) {  // ite(f, 0, 1)
-        return neg(i);
     }
 
     // Check the computed table
@@ -150,29 +148,9 @@ BDD_ID Manager::coFactorFalse(BDD_ID f) {
 }
 
 BDD_ID Manager::neg(BDD_ID a) {
-    // Special cases for true and false
-    // Because keeping the top_var_id would not work
-    if (a == kTrueId) return kFalseId;
-    if (a == kFalseId) return kTrueId;
-
-    const Node &node = nodes_[a];
-
-    Node new_node;
-    new_node.high_id = node.low_id;
-    new_node.low_id = node.high_id;
-    new_node.top_var_id = node.top_var_id;
-
-    if (FindMatchingNode(new_node.high_id, new_node.low_id, new_node.top_var_id,
-                         &new_node.id)) {
-      return new_node.id;  // return the already existing id
-    }
-
-    // Otherwise create a new one
-    new_node.id = nodes_.size();
-    new_node.label = "not " + node.label;
-    nodes_.push_back(new_node);
-
-    return new_node.id;
+    BDD_ID result = ite(a, False(), True());
+    nodes_[a].label = "not(" + nodes_[a].label + ")";
+    return result;
 }
 
 void Manager::UpdateLabel(BDD_ID node, const std::string &prefix, BDD_ID a, BDD_ID b) {
