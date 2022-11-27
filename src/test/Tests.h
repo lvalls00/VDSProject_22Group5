@@ -231,4 +231,19 @@ TEST_F(ManagerTests, FullExample_Part1) {
     std::cout << manager.getLabel(result) << std::endl;
 }
 
+TEST_F(ManagerTests, Xnor2Test) {
+    ClassProject::BDD_ID false_id = manager.False();
+    ClassProject::BDD_ID true_id = manager.True();
+    ClassProject::BDD_ID a_id = manager.createVar("a");
+
+    EXPECT_EQ(manager.xnor2(false_id, false_id), true_id);
+    EXPECT_EQ(manager.xnor2(false_id, true_id), false_id);
+    EXPECT_EQ(manager.xnor2(true_id, false_id), false_id);
+
+    EXPECT_EQ(manager.xnor2(true_id, true_id), true_id);
+
+    EXPECT_EQ(manager.xnor2(a_id, true_id), a_id);
+    EXPECT_EQ(manager.xnor2(true_id, a_id), a_id);
+}
+
 #endif  // SRC_TEST_TESTS_H_

@@ -176,19 +176,19 @@ BDD_ID Manager::xor2(BDD_ID a, BDD_ID b) {
 }
 
 BDD_ID Manager::nand2(BDD_ID a, BDD_ID b) {
-    BDD_ID result = or2(neg(a), neg(b));
+    BDD_ID result = ite(neg(a), True(), neg(b));
     UpdateLabel(result, "nand2", a, b);
     return result;
 }
 
 BDD_ID Manager::nor2(BDD_ID a, BDD_ID b) {
-    BDD_ID result = and2(neg(a), neg(b));
+    BDD_ID result = ite(neg(a), neg(b), False());
     UpdateLabel(result, "nor2", a, b);
     return result;
 }
 
 BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b) {
-    BDD_ID result = neg(xor2(a, b));
+    BDD_ID result = ite(a, b, neg(b));
     UpdateLabel(result, "xnor2", a, b);
     return result;
 }
