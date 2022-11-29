@@ -246,4 +246,12 @@ TEST_F(ManagerTests, Xnor2Test) {
     EXPECT_EQ(manager.xnor2(true_id, a_id), a_id);
 }
 
+TEST_F(ManagerTests, NegTest)
+{
+    ClassProject::BDD_ID a_id = manager.createVar("a");
+    ClassProject::BDD_ID neg_a_id = manager.neg(a_id);
+    EXPECT_EQ(manager.neg(a_id), neg_a_id);
+    EXPECT_EQ(manager.neg(neg_a_id), a_id);
+}
+
 #endif  // SRC_TEST_TESTS_H_

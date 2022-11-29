@@ -90,7 +90,7 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
     BDD_ID existing_node_id = kFalseId;
     bool existing_node = FindMatchingNode(result_high, result_low, topvar, &existing_node_id);
     if (existing_node) {
-        computed_table_[node_hash] = existing_node;
+        computed_table_[node_hash] = existing_node_id;
         return existing_node_id;
     }
 
