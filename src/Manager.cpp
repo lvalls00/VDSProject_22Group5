@@ -149,47 +149,36 @@ BDD_ID Manager::coFactorFalse(BDD_ID f) {
 
 BDD_ID Manager::neg(BDD_ID a) {
     BDD_ID result = ite(a, False(), True());
-    nodes_[a].label = "not(" + nodes_[a].label + ")";
     return result;
-}
-
-void Manager::UpdateLabel(BDD_ID node, const std::string &prefix, BDD_ID a, BDD_ID b) {
-    nodes_[node].label = prefix + "(" + nodes_[a].label + ", " + nodes_[b].label + ")";
 }
 
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b) {
     BDD_ID result = ite(a, b, False());
-    UpdateLabel(result, "and2", a, b);
     return result;
 }
 
 BDD_ID Manager::or2(BDD_ID a, BDD_ID b) {
     BDD_ID result = ite(a, True(), b);
-    UpdateLabel(result, "or2", a, b);
     return result;
 }
 
 BDD_ID Manager::xor2(BDD_ID a, BDD_ID b) {
     BDD_ID result = ite(a, neg(b), b);
-    UpdateLabel(result, "xor2", a, b);
     return result;
 }
 
 BDD_ID Manager::nand2(BDD_ID a, BDD_ID b) {
     BDD_ID result = ite(neg(a), True(), neg(b));
-    UpdateLabel(result, "nand2", a, b);
     return result;
 }
 
 BDD_ID Manager::nor2(BDD_ID a, BDD_ID b) {
     BDD_ID result = ite(neg(a), neg(b), False());
-    UpdateLabel(result, "nor2", a, b);
     return result;
 }
 
 BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b) {
     BDD_ID result = ite(a, b, neg(b));
-    UpdateLabel(result, "xnor2", a, b);
     return result;
 }
 
