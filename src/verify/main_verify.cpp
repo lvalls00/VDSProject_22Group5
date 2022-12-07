@@ -16,7 +16,7 @@ struct node {
 
 typedef std::map<int, node> uniqueTable;
 
-bool isEquivalent(uniqueTable BDD1, uniqueTable BDD2, int root1, int root2)
+bool isEquivalent(const uniqueTable &BDD1, const uniqueTable &BDD2, int root1, int root2)
 {
 	if(BDD1.find(root1) == BDD1.end() || BDD2.find(root2) == BDD2.end())
 		return false;
@@ -26,9 +26,9 @@ bool isEquivalent(uniqueTable BDD1, uniqueTable BDD2, int root1, int root2)
 		return true;
 	if(root1 != root2 && ( (root1 == 0 || root1 == 1) || (root2 == 0 || root2 == 1) ) )
 		return false;
-	if(BDD1[root1].var_name != BDD2[root2].var_name)
+	if(BDD1.at(root1).var_name != BDD2.at(root2).var_name)
 		return false;
-	return isEquivalent(BDD1, BDD2, BDD1[root1].low, BDD2[root2].low) and isEquivalent(BDD1, BDD2, BDD1[root1].high, BDD2[root2].high);
+	return isEquivalent(BDD1, BDD2, BDD1.at(root1).low, BDD2.at(root2).low) and isEquivalent(BDD1, BDD2, BDD1.at(root1).high, BDD2.at(root2).high);
 }
 
 int main(int argc, char* argv[])
