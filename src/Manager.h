@@ -77,7 +77,11 @@ class Manager : public ManagerInterface {
   BDD_ID GetMinimumTopVariable(BDD_ID x, BDD_ID y, BDD_ID z);
 
   std::vector<Node> nodes_;
-  std::unordered_map<std::tuple<BDD_ID, BDD_ID, BDD_ID>, BDD_ID> computed_table_;
+  // Hash table from (high_id, low_id, top_var_id) -> unique table id to allow constant time lookup
+  std::unordered_map<IntTriplet, BDD_ID> unique_table_lookup;
+
+  // (i, t, e) -> id of resulting computation
+  std::unordered_map<IntTriplet, BDD_ID> computed_table_;  // for ite calls
 };
 
 }  // namespace ClassProject

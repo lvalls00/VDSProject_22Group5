@@ -11,6 +11,8 @@ const BDD_ID Manager::kFalseId = 0;
 Manager::Manager() {
     nodes_.push_back({kFalseId, kFalseId, kFalseId, kFalseId, "False"});
     nodes_.push_back({kTrueId, kTrueId, kTrueId, kTrueId, "True"});
+    unique_table_lookup[{kFalseId, kFalseId, kFalseId}] = kFalseId;
+    unique_table_lookup[{kTrueId, kTrueId, kTrueId}] = kTrueId;
 }
 
 Manager::~Manager() {}
@@ -18,6 +20,7 @@ Manager::~Manager() {}
 BDD_ID Manager::createVar(const std::string &label) {
     BDD_ID id = nodes_.size();
     nodes_.push_back({id, True(), False(), id, label});
+    unique_table_lookup[{True(), False(), id}] = id;
     return id;
 }
 
@@ -88,23 +91,19 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e) {
     }
 
     BDD_ID existing_node_id = kFalseId;
-    bool existing_node = FindMatchingNode(result_high, result_low, topvar, &existing_node_id);
-    if (existing_node) {
+    bool node_exists = FindMatchingNode(result_high, result_low, topvar, &existing_node_id);
+    if (node_exists) {
         computed_table_[node_hash] = existing_node_id;
         return existing_node_id;
     }
 
-    Node new_node;
-    new_node.high_id = result_high;
-    new_node.low_id = result_low;
-    new_node.id = nodes_.size();
-    new_node.top_var_id = topvar;
-    new_node.label = ":p";
-    nodes_.push_back(new_node);
+    BDD_ID new_node_id = nodes_.size();
+    nodes_.push_back({new_node_id, result_high, result_low, topvar, ""});
+    unique_table_lookup[{result_high, result_low, topvar}] = new_node_id;
 
-    computed_table_[node_hash] = new_node.id;
+    computed_table_[node_hash] = new_node_id;
 
-    return new_node.id;
+    return new_node_id;
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x) {
@@ -212,14 +211,13 @@ size_t Manager::uniqueTableSize() {
 }
 
 bool Manager::FindMatchingNode(BDD_ID high, BDD_ID low, BDD_ID top_var, BDD_ID *result) {
-    for (const Node &node : nodes_) {
-        if (node.high_id == high && node.low_id == low && node.top_var_id == top_var) {
-            *result = node.id;
-            return true;
-        }
+    auto result_it = unique_table_lookup.find({high, low, top_var});
+    if (result_it == unique_table_lookup.end()) {
+        return false;
     }
 
-    return false;
+    *result = result_it->second;
+    return true;
 }
 
 BDD_ID Manager::high(BDD_ID x) {
