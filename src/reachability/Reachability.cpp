@@ -1,5 +1,7 @@
 #include "Reachability.h"
 
+#include <stdexcept>
+
 namespace ClassProject {
 Reachability::Reachability(unsigned int stateSize)
     : ReachabilityInterface(stateSize), needs_update_(true), current_CR_(False()) {

@@ -1,6 +1,7 @@
 #ifndef SRC_REACHABILITY_TESTS_H_
 #define SRC_REACHABILITY_TESTS_H_
 
+#include <stdexcept>
 #include <gtest/gtest.h>
 #include "Reachability.h"
 
