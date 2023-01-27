@@ -18,9 +18,14 @@ class Reachability : public ReachabilityInterface {
   void setInitState(const std::vector<bool> &stateVector) override;
 
 private:
+  void CalculateCR();
+
   std::vector<BDD_ID> state_variables_;
+  std::vector<BDD_ID> next_state_variables_;
   std::vector<BDD_ID> transition_functions_;
   std::vector<bool> initial_state_;
+  bool needs_update_;
+  BDD_ID current_CR_;
 };
 
 }  // namespace ClassProject
