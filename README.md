@@ -50,6 +50,8 @@ CI Workflow status:
     <br />
     Luis Valls Sansaloni
     <br />
+    Harish Nagaruru Venkata
+    <br />
   </p>
 </div>
 
@@ -165,10 +167,10 @@ This is an example of how to list things you need to use the software and how to
    ```
 **Installation with CLion**
 
-CLion comes with CMake. 
+CLion comes with CMake.
 2. Open CLion and open VDSProject/CMakeLists.txt as a project.
 3. Select your target and build the project.
-   
+
 **Installation without CLion**
 
 
@@ -183,7 +185,7 @@ CLion comes with CMake.
 4. Invoke make
     ```sh
     make
-    ```   
+    ```
 <!--
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
@@ -219,8 +221,8 @@ _Below is an example of how you can instruct your audience on installing and set
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 #### Part-3
-- [X] TODO
-- [ ] DONE
+- [ ] TODO
+- [X] DONE
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTACT -->
