@@ -9,12 +9,12 @@ Reachability::Reachability(unsigned int stateSize)
 
         // Create the state variables
         for (unsigned int i = 0; i < stateSize; i++) {
-            BDD_ID id = createVar("s" + i);
+            BDD_ID id = createVar("s" + std::to_string(i));
             state_variables_.push_back(id);
             transition_functions_.push_back(id);
             initial_state_.push_back(false);
 
-            BDD_ID next_state = createVar("s'" + i);
+            BDD_ID next_state = createVar("s'" + std::to_string(i));
             next_state_variables_.push_back(next_state);
         }
     }
@@ -31,7 +31,7 @@ bool Reachability::isReachable(const std::vector<bool> &stateVector) {
     size_t size = state_variables_.size();
     BDD_ID temp = current_CR_;
     for (size_t i = 0; i < size; i++) {
-        temp = stateVector.at(i) ? coFactorTrue(temp) : coFactorFalse(temp);
+        temp = stateVector.at(i) ? coFactorTrue(temp, state_variables_.at(i)) : coFactorFalse(temp, state_variables_.at(i));
     }
 
     return temp == True();
